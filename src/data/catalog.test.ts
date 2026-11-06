@@ -97,3 +97,45 @@ test('parseAspectRatioDimensions supports all 8 required aspect ratios', () => {
   assert.equal(cinematic.heightRatio, 9);
   assert.ok(cinematic.aspectNumeric > 2.3);
 });
+
+test('all collections and products exclusively use the 7 uploaded furniture images in the correct sections', () => {
+  const expectedUploadedPaths = [
+    '/assets/aistudio/image_9a06a734.png',
+    '/assets/aistudio/image_3000d7e8.png',
+    '/assets/aistudio/image_14a5aee4.png',
+    '/assets/aistudio/image_3fb6bdc4.png',
+    '/assets/aistudio/image_871bc257.png',
+    '/assets/aistudio/image_38732a38.png',
+    '/assets/aistudio/image_025f9b18.png',
+  ];
+
+  for (const col of COLLECTIONS) {
+    assert.ok(
+      expectedUploadedPaths.includes(col.coverImage),
+      `Collection ${col.id} coverImage ${col.coverImage} must be an uploaded asset`
+    );
+  }
+
+  for (const prod of PRODUCTS) {
+    assert.ok(
+      expectedUploadedPaths.includes(prod.image),
+      `Product ${prod.id} image ${prod.image} must be an uploaded asset`
+    );
+    assert.ok(
+      expectedUploadedPaths.includes(prod.secondaryImage),
+      `Product ${prod.id} secondaryImage ${prod.secondaryImage} must be an uploaded asset`
+    );
+  }
+
+  // Verify section-specific assignments
+  const sofaCol = COLLECTIONS.find((c) => c.id === 'sofas-living');
+  const bedCol = COLLECTIONS.find((c) => c.id === 'modern-bedroom');
+  const diningCol = COLLECTIONS.find((c) => c.id === 'dining-tables-chairs');
+  const wardrobeCol = COLLECTIONS.find((c) => c.id === 'wardrobes-storage');
+
+  assert.equal(sofaCol?.coverImage, '/assets/aistudio/image_9a06a734.png');
+  assert.equal(bedCol?.coverImage, '/assets/aistudio/image_14a5aee4.png');
+  assert.equal(diningCol?.coverImage, '/assets/aistudio/image_3fb6bdc4.png');
+  assert.equal(wardrobeCol?.coverImage, '/assets/aistudio/image_871bc257.png');
+});
+

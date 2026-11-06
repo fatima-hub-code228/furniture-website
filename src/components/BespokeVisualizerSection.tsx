@@ -4,16 +4,35 @@ import {
   ASPECT_RATIO_OPTIONS,
   AspectRatioOption,
   parseAspectRatioDimensions,
+  UPLOADED_SOFA_SECTIONAL,
+  UPLOADED_BED_KING,
+  UPLOADED_DINING_SUITE,
 } from '../data/catalog';
 
 const PRESET_PROMPTS = [
-  'Futuristic dark marble penthouse living room with a curved ivory bouclé sofa floating on a golden lit circular obsidian platform, dramatic cinema spotlights',
-  'Architectural obsidian master bedroom with a bronze-framed king bed, illuminated golden halo rings, warm amber accent strips',
-  'Sculptural travertine and brushed gold dining table inside a dark luxury glass pavilion overlooking a nocturnal skyline',
+  {
+    prompt:
+      'Futuristic dark marble penthouse living room with a curved ivory bouclé sofa floating on a golden lit circular obsidian platform, dramatic cinema spotlights',
+    previewImage: UPLOADED_SOFA_SECTIONAL,
+    imagePosition: 'center 70%',
+  },
+  {
+    prompt:
+      'Architectural obsidian master bedroom with a bronze-framed king bed, illuminated golden halo rings, warm amber accent strips',
+    previewImage: UPLOADED_BED_KING,
+    imagePosition: 'center 62%',
+  },
+  {
+    prompt:
+      'Sculptural travertine and brushed gold dining table inside a dark luxury glass pavilion overlooking a nocturnal skyline',
+    previewImage: UPLOADED_DINING_SUITE,
+    imagePosition: 'center 72%',
+  },
 ];
 
 export const BespokeVisualizerSection: React.FC = () => {
-  const [prompt, setPrompt] = useState<string>(PRESET_PROMPTS[0]);
+  const [prompt, setPrompt] = useState<string>(PRESET_PROMPTS[0].prompt);
+  const [activePresetIdx, setActivePresetIdx] = useState<number>(0);
   const [aspectRatio, setAspectRatio] = useState<AspectRatioOption>('16:9');
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -25,6 +44,7 @@ export const BespokeVisualizerSection: React.FC = () => {
   } | null>(null);
 
   const dims = parseAspectRatioDimensions(aspectRatio);
+  const activePreset = PRESET_PROMPTS[activePresetIdx] || PRESET_PROMPTS[0];
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,8 +109,8 @@ export const BespokeVisualizerSection: React.FC = () => {
 
             <p className="text-sm md:text-base text-[#C8B99E] leading-relaxed mb-8">
               Describe your dream architectural interior, custom upholstery, or sculptural
-              proportions. Select your preferred framing aspect ratio to generate a bespoke
-              DREAMHOME concept render.
+              proportions. Select your preferred framing aspect ratio to preview or generate a
+              bespoke DREAMHOME concept.
             </p>
 
             <form onSubmit={handleGenerate} noValidate className="space-y-6">
@@ -125,15 +145,21 @@ export const BespokeVisualizerSection: React.FC = () => {
                   Curated Showroom Prompts
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {PRESET_PROMPTS.map((preset, idx) => (
+                  {PRESET_PROMPTS.map((item, idx) => (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => {
-                        setPrompt(preset);
+                        setActivePresetIdx(idx);
+                        setPrompt(item.prompt);
+                        setGeneratedResult(null);
                         setErrorMessage(null);
                       }}
-                      className="text-left text-xs px-3 py-1.5 bg-[#17120D] border border-[#D6A342]/30 text-[#D8CFC2] hover:border-[#FFC857] hover:text-[#FFC857] transition-colors cursor-pointer"
+                      className={`text-left text-xs px-3 py-1.5 border transition-colors cursor-pointer ${
+                        activePresetIdx === idx
+                          ? 'bg-[#D6A342]/20 border-[#FFC857] text-[#FFC857]'
+                          : 'bg-[#17120D] border-[#D6A342]/30 text-[#D8CFC2] hover:border-[#FFC857] hover:text-[#FFC857]'
+                      }`}
                     >
                       Concept 0{idx + 1}
                     </button>
@@ -230,21 +256,32 @@ export const BespokeVisualizerSection: React.FC = () => {
                     </figcaption>
                   </figure>
                 ) : (
-                  <div
-                    style={{
-                      aspectRatio: aspectRatio.replace(':', ' / '),
-                    }}
-                    className="max-h-[380px] w-full max-w-xl bg-gradient-to-br from-[#17120D] via-[#0F0C09] to-[#080808] border border-dashed border-[#D6A342]/50 flex flex-col items-center justify-center p-8 text-center transition-all"
-                  >
-                    <Sparkles className="w-8 h-8 text-[#FFC857] mb-3" />
-                    <p className="text-base font-serif text-white mb-1">
-                      Ready to Render in {aspectRatio} Format
-                    </p>
-                    <p className="text-xs text-[#C8B99E] max-w-sm">
-                      Click &ldquo;Generate Bespoke Render&rdquo; to synthesize a custom
-                      architectural furniture visualization.
-                    </p>
-                  </div>
+                  <figure className="w-full flex flex-col items-center group overflow-hidden">
+                    <div
+                      style={{
+                        aspectRatio: aspectRatio.replace(':', ' / '),
+                      }}
+                      className="relative max-h-[420px] w-full max-w-2xl overflow-hidden border border-[#D6A342]/50 shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+                    >
+                      <img
+                        src={activePreset.previewImage}
+                        alt={activePreset.prompt}
+                        style={{
+                          objectPosition: activePreset.imagePosition,
+                        }}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#080808]/80 via-transparent to-[#080808]/20" />
+                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between px-3 py-2 bg-[#080808]/85 backdrop-blur-sm border border-[#D6A342]/40">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-[#FFC857]">
+                          Showroom Reference ({aspectRatio})
+                        </span>
+                        <span className="text-[11px] font-mono text-[#D8CFC2]">
+                          Hover to Zoom • Click Generate for Custom Render
+                        </span>
+                      </div>
+                    </div>
+                  </figure>
                 )}
               </div>
             </div>
@@ -254,3 +291,4 @@ export const BespokeVisualizerSection: React.FC = () => {
     </section>
   );
 };
+

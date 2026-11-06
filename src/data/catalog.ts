@@ -50,6 +50,7 @@ export interface CollectionMeta {
   architecturalNote: string;
   roomId: RoomId;
   coverImage: string;
+  imagePosition?: string;
 }
 
 export interface ProductFinish {
@@ -76,6 +77,7 @@ export interface FurnitureProduct {
   architecturalStory: string;
   image: string;
   secondaryImage: string;
+  imagePosition?: string;
   modelType: FurnitureModelType;
   finishes: ProductFinish[];
   featuredOrder: number;
@@ -171,14 +173,14 @@ export const ROOM_ZONES: RoomZone[] = [
   },
 ];
 
-const IMG_GOLD_SOFA = '/src/assets/images/dreamhome_gold_sofa_1793983301966.jpg';
-const IMG_KING_BED = '/src/assets/images/dreamhome_king_bed_1793983303672.jpg';
-const IMG_DINING_DARK = '/src/assets/images/dreamhome_dining_table_1793983304113.jpg';
-const IMG_OFFICE_CHAIR = '/src/assets/images/dreamhome_office_chair_1793983305507.jpg';
-const IMG_WARDROBE = '/src/assets/images/wardrobe_fluted_oak_1793981984358.jpg';
-const IMG_COFFEE = '/src/assets/images/coffee_table_plinth_1793981984258.jpg';
-const IMG_DECOR = '/src/assets/images/decor_ceramic_vessels_1793981985356.jpg';
-const IMG_SOFA_ALT = '/src/assets/images/sofa_living_sanctuary_1793981980159.jpg';
+// Exact User-Uploaded Furniture Images (served from /public/assets/aistudio for Vercel & local builds)
+export const UPLOADED_SOFA_SECTIONAL = '/assets/aistudio/image_9a06a734.png';
+export const UPLOADED_SOFA_BOUCLE = '/assets/aistudio/image_3000d7e8.png';
+export const UPLOADED_BED_KING = '/assets/aistudio/image_14a5aee4.png';
+export const UPLOADED_DINING_SUITE = '/assets/aistudio/image_3fb6bdc4.png';
+export const UPLOADED_WARDROBE_STORAGE = '/assets/aistudio/image_871bc257.png';
+export const UPLOADED_COFFEE_TABLE = '/assets/aistudio/image_38732a38.png';
+export const UPLOADED_ARCHITECTURAL_LOUNGE = '/assets/aistudio/image_025f9b18.png';
 
 export const COLLECTIONS: CollectionMeta[] = [
   {
@@ -186,81 +188,88 @@ export const COLLECTIONS: CollectionMeta[] = [
     number: '01',
     title: 'Luxury Sofas',
     shortTitle: 'Luxury Sofas',
-    subtitle: 'Aerodynamic curved velvet and champagne leather sofas with 24K gold inlay trim.',
+    subtitle: 'Architectural sectional sofas, bouclé lounge silhouettes, and tailored living room ensembles.',
     architecturalNote: 'Engineered to float above illuminated circular showroom platforms.',
     roomId: 'living',
-    coverImage: IMG_GOLD_SOFA,
+    coverImage: UPLOADED_SOFA_SECTIONAL,
+    imagePosition: 'center 68%',
   },
   {
     id: 'modern-bedroom',
     number: '02',
     title: 'King-Size Beds',
     shortTitle: 'King-Size Beds',
-    subtitle: 'Cantilevered king-size sanctuary beds with golden underglow and channeled leather.',
-    architecturalNote: 'Includes integrated floating nightstands and acoustic winged headboards.',
+    subtitle: 'Geometric gold-inlaid upholstered king-size beds with matching bedside nightstands and warm lighting.',
+    architecturalNote: 'Includes integrated bedside pedestals and Diagonal Brushed-Gold Channeling.',
     roomId: 'bedroom',
-    coverImage: IMG_KING_BED,
+    coverImage: UPLOADED_BED_KING,
+    imagePosition: 'center 62%',
   },
   {
     id: 'dining-tables-chairs',
     number: '03',
     title: 'Dining Tables',
     shortTitle: 'Dining Tables',
-    subtitle: 'Sculptural Nero Marquina marble and interlocking brushed gold dining architecture.',
+    subtitle: 'Sculptural monolith pedestal dining tables paired with two-tone gold-tipped dining armchairs.',
     architecturalNote: 'Modular multi-part stone and gold pedestals that assemble with precision.',
     roomId: 'dining',
-    coverImage: IMG_DINING_DARK,
+    coverImage: UPLOADED_DINING_SUITE,
+    imagePosition: 'center 72%',
   },
   {
     id: 'wardrobes-storage',
     number: '04',
     title: 'Modern Wardrobes',
     shortTitle: 'Modern Wardrobes',
-    subtitle: 'Motorized bronze glass vitrines and fluted timber cabinetry with golden LED strips.',
-    architecturalNote: 'Precision 110-degree articulated doors reveal illuminated interior shelving.',
+    subtitle: 'Arched brass shelving vitrines, dark-paneled storage architecture, and bespoke dressing salon pieces.',
+    architecturalNote: 'Precision articulated storage systems with warm gallery illumination.',
     roomId: 'dressing',
-    coverImage: IMG_WARDROBE,
+    coverImage: UPLOADED_WARDROBE_STORAGE,
+    imagePosition: 'center 52%',
   },
   {
     id: 'office-chairs',
     number: '05',
     title: 'Office Chairs',
     shortTitle: 'Office Chairs',
-    subtitle: 'Carbon-sculpted exoskeleton task seating wrapped in hand-stitched cognac leather.',
-    architecturalNote: 'Balanced on a 5-point brushed champagne gold base with 360° swivel.',
+    subtitle: 'Polished chrome and full-grain leather executive and studio chairs engineered for modern salons.',
+    architecturalNote: 'Balanced on architectural bases with 360° showroom rotation.',
     roomId: 'dressing',
-    coverImage: IMG_OFFICE_CHAIR,
+    coverImage: UPLOADED_ARCHITECTURAL_LOUNGE,
+    imagePosition: 'center 75%',
   },
   {
     id: 'designer-furniture',
     number: '06',
     title: 'Designer Furniture',
     shortTitle: 'Designer Furniture',
-    subtitle: 'Monolithic stone plinth tables, cantilevered gold occasional pieces, and lighting.',
+    subtitle: 'Sculptural organic timber coffee tables, curved metal plinth bases, and artisanal ceramic vessels.',
     architecturalNote: 'Limited-edition sculptural statements crafted for private collectors.',
     roomId: 'living',
-    coverImage: IMG_COFFEE,
+    coverImage: UPLOADED_COFFEE_TABLE,
+    imagePosition: 'center 60%',
   },
 ];
 
 export const PRODUCTS: FurnitureProduct[] = [
   {
     id: 'sovereign-orbital-sofa',
-    name: 'Sovereign Orbital Velvet & Gold Sofa',
+    name: 'Sovereign Grand L-Sectional Luxury Sofa',
     collectionId: 'sofas-living',
     collectionLabel: 'Luxury Sofas',
     roomId: 'living',
     price: 16800,
     showcaseTiers: ['featured', 'bestseller'],
     dimensions: '350 × 170 × 76 cm',
-    materials: 'Obsidian Silk Velvet, Champagne Full-Grain Leather, 24K Brushed Gold Ribbing',
+    materials: 'Alabaster Performance Velvet, Kiln-Dried Hardwood Frame, Brushed Gold Accents',
     leadTime: 'Showroom Ready · White-Glove Dispatch',
     description:
-      'A sweeping futuristic crescent sofa with an obsidian velvet outer shell, champagne leather seating deck, and continuous brushed gold contour piping.',
+      'An expansive architectural L-shaped sectional sofa with deep chaise lounge cushioning, tailored bolster pillows, and a low-profile gallery silhouette.',
     architecturalStory:
       'Designed as the hero star of the DREAMHOME showroom, suspended above a reflective black marble pedestal with twin rotating golden energy rings.',
-    image: IMG_GOLD_SOFA,
-    secondaryImage: IMG_SOFA_ALT,
+    image: UPLOADED_SOFA_SECTIONAL,
+    secondaryImage: UPLOADED_SOFA_BOUCLE,
+    imagePosition: 'center 70%',
     modelType: 'curved_sofa',
     finishes: [
       {
@@ -271,7 +280,7 @@ export const PRODUCTS: FurnitureProduct[] = [
         accentHex: '#FFC857',
       },
       {
-        name: ' Royal Espresso Leather & 24K Gold',
+        name: 'Royal Espresso Leather & 24K Gold',
         swatchHex: '#5C3A21',
         woodHex: '#2B1D12',
         fabricHex: '#8C6239',
@@ -290,35 +299,36 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'apex-cantilever-king-bed',
-    name: 'Apex Cantilevered Walnut & Gold King Bed',
+    name: 'Apex Geometric Gold-Inlaid Luxury King Bed',
     collectionId: 'modern-bedroom',
     collectionLabel: 'King-Size Beds',
     roomId: 'bedroom',
     price: 14200,
     showcaseTiers: ['featured', 'bestseller'],
     dimensions: '285 × 235 × 118 cm',
-    materials: 'Smoked Black Walnut, Charcoal Nubuck Leather, Brushed Gold Inlays',
+    materials: 'Cream Full-Grain Nappa Leather, Diagonal 24K Gold Trim, Quilted Silk Bedding',
     leadTime: 'Made to order · 3 Weeks',
     description:
-      'A monumental king-size sanctuary bed featuring a horizontal channeled charcoal nubuck headboard framed by smoked walnut wings and brushed gold architectural strips.',
+      'A monumental king-size sanctuary bed featuring an upholstered cream leather headboard divided by diagonal brushed-gold architectural inlays and matching platform rails.',
     architecturalStory:
       'Engineered on a recessed Nero Marquina marble plinth with integrated 2700K golden perimeter underglow.',
-    image: IMG_KING_BED,
-    secondaryImage: IMG_WARDROBE,
+    image: UPLOADED_BED_KING,
+    secondaryImage: UPLOADED_WARDROBE_STORAGE,
+    imagePosition: 'center 62%',
     modelType: 'platform_bed',
     finishes: [
       {
-        name: 'Charcoal Nubuck & Smoked Walnut',
-        swatchHex: '#2C2825',
+        name: 'Champagne Nappa & 24K Gold Trim',
+        swatchHex: '#E5DBC9',
         woodHex: '#4A3525',
-        fabricHex: '#3B3632',
+        fabricHex: '#E5DBC9',
         accentHex: '#D6A342',
       },
       {
-        name: 'Champagne Suede & Espresso Oak',
-        swatchHex: '#C8B294',
+        name: 'Charcoal Nubuck & Smoked Walnut',
+        swatchHex: '#2C2825',
         woodHex: '#2E2016',
-        fabricHex: '#D6C4AA',
+        fabricHex: '#3B3632',
         accentHex: '#FFC857',
       },
     ],
@@ -327,7 +337,7 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'eclipse-nero-gold-dining-table',
-    name: 'Eclipse Nero Marquina & 24K Gold Dining Table',
+    name: 'Eclipse Sculptural Pedestal Dining Table',
     collectionId: 'dining-tables-chairs',
     collectionLabel: 'Dining Tables',
     roomId: 'dining',
@@ -335,26 +345,27 @@ export const PRODUCTS: FurnitureProduct[] = [
     originalPrice: 17900,
     showcaseTiers: ['featured', 'special-offer'],
     dimensions: '300 × 130 × 76 cm',
-    materials: 'Polished Nero Marquina Black Marble, Interlocking Brushed Gold Struts',
+    materials: 'Polished Lacquered Stone Tabletop, Faceted Monolith Pedestal, Brushed Brass Base',
     leadTime: 'In Stock · White-Glove Delivery',
     description:
-      'An architectural oval black marble tabletop supported by interlocking diagonal brushed gold and Carrara stone structural beams.',
+      'A sleek contemporary dining table supported by a faceted architectural center column and brushed metallic floor plate, surrounded by tailored two-tone armchairs.',
     architecturalStory:
       'Precision-machined in modular components that lock together without visible fasteners for a dramatic kinetic assembly.',
-    image: IMG_DINING_DARK,
-    secondaryImage: IMG_DECOR,
+    image: UPLOADED_DINING_SUITE,
+    secondaryImage: UPLOADED_COFFEE_TABLE,
+    imagePosition: 'center 72%',
     modelType: 'travertine_dining',
     finishes: [
       {
-        name: 'Nero Marquina Marble & 24K Gold',
-        swatchHex: '#1A1817',
+        name: 'Polished Taupe Stone & Brushed Gold',
+        swatchHex: '#C5B8A5',
         woodHex: '#D6A342',
         fabricHex: '#292522',
         accentHex: '#FFC857',
       },
       {
-        name: 'Roman Travertine & Champagne Brass',
-        swatchHex: '#D9CBB8',
+        name: 'Nero Marquina Marble & 24K Gold',
+        swatchHex: '#1A1817',
         woodHex: '#B6946A',
         fabricHex: '#E5DBC9',
         accentHex: '#D6A342',
@@ -365,29 +376,30 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'valkyrie-carbon-gold-office-chair',
-    name: 'Valkyrie Carbon & Cognac Executive Chair',
+    name: 'Valkyrie Polished Chrome & Leather Studio Chair',
     collectionId: 'office-chairs',
     collectionLabel: 'Office Chairs',
     roomId: 'dressing',
     price: 5400,
     showcaseTiers: ['featured', 'new-arrival', 'bestseller'],
     dimensions: '68 × 72 × 124 cm',
-    materials: 'Sculpted Carbon Fiber Exoskeleton, Quilted Cognac Leather, Cast Gold Spine',
+    materials: 'Mirror-Polished Architectural Frame, Tailored Leather Upholstery, Gold Accents',
     leadTime: 'In Stock · Express Courier',
     description:
-      'A futuristic high-back executive throne combining a sculpted matte carbon fiber outer shell with diamond-quilted cognac leather and an articulated cast-gold spine.',
+      'A futuristic cantilevered studio and executive chair combining a reflective metallic frame with ergonomic upholstered seating for modern architectural workspaces.',
     architecturalStory:
       'Built for zero-fatigue command in private studies and architectural penthouses.',
-    image: IMG_OFFICE_CHAIR,
-    secondaryImage: IMG_GOLD_SOFA,
+    image: UPLOADED_ARCHITECTURAL_LOUNGE,
+    secondaryImage: UPLOADED_WARDROBE_STORAGE,
+    imagePosition: 'center 78%',
     modelType: 'executive_office_chair',
     finishes: [
       {
-        name: 'Cognac Full-Grain Leather & Gold Spine',
-        swatchHex: '#9C5A2E',
+        name: 'Champagne Leather & Polished Gold',
+        swatchHex: '#D6A342',
         woodHex: '#1C1A17',
-        fabricHex: '#9C5A2E',
-        accentHex: '#D6A342',
+        fabricHex: '#D8C3A5',
+        accentHex: '#FFC857',
       },
       {
         name: 'Obsidian Nappa Leather & Bright Gold',
@@ -402,7 +414,7 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'atelier-fluted-oak-wardrobe',
-    name: 'Chronos Illuminated Bronze & Fluted Wardrobe',
+    name: 'Chronos Arched Brass & Obsidian Wardrobe Vitrine',
     collectionId: 'wardrobes-storage',
     collectionLabel: 'Modern Wardrobes',
     roomId: 'dressing',
@@ -410,29 +422,30 @@ export const PRODUCTS: FurnitureProduct[] = [
     originalPrice: 21500,
     showcaseTiers: ['featured', 'special-offer'],
     dimensions: '320 × 64 × 260 cm',
-    materials: 'Fluted Smoked Oak, Tinted Bronze Glass, 2700K Golden LED Vitrines',
+    materials: 'Brushed 24K Brass Arched Frame, Smoked Dark Oak Panels, 2700K LED Vitrines',
     leadTime: 'Bespoke Commission · 4 Weeks',
     description:
-      'Floor-to-ceiling futuristic wardrobe system with articulated fluted timber doors and smoked bronze glass vitrines that swing open to reveal illuminated couture shelving.',
+      'An architectural dark-luxury wardrobe and arched brass display vitrine system that illuminates curated garments, objets d’art, and private collections.',
     architecturalStory:
-      'Integrates motion-activated golden light strips along every vertical stave.',
-    image: IMG_WARDROBE,
-    secondaryImage: IMG_KING_BED,
+      'Integrates warm golden light strips and precision-hinged doors for effortless interior access.',
+    image: UPLOADED_WARDROBE_STORAGE,
+    secondaryImage: UPLOADED_BED_KING,
+    imagePosition: 'center 48%',
     modelType: 'fluted_wardrobe',
     finishes: [
+      {
+        name: 'Brushed 24K Gold & Obsidian Panel',
+        swatchHex: '#D6A342',
+        woodHex: '#241F1B',
+        fabricHex: '#E6DEC8',
+        accentHex: '#FFC857',
+      },
       {
         name: 'Smoked Oak & Champagne Gold Vitrine',
         swatchHex: '#735338',
         woodHex: '#5C4028',
-        fabricHex: '#E6DEC8',
-        accentHex: '#D6A342',
-      },
-      {
-        name: 'Obsidian Ash & Bright Gold',
-        swatchHex: '#241F1B',
-        woodHex: '#241F1B',
         fabricHex: '#D6A342',
-        accentHex: '#FFC857',
+        accentHex: '#D6A342',
       },
     ],
     featuredOrder: 5,
@@ -440,26 +453,27 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'quarry-plinth-coffee-table',
-    name: 'Monolith Levitating Stone & Gold Plinth Table',
+    name: 'Monolith Organic Timber & Curved Steel Coffee Table',
     collectionId: 'designer-furniture',
     collectionLabel: 'Designer Furniture',
     roomId: 'living',
     price: 4950,
     showcaseTiers: ['featured', 'bestseller'],
-    dimensions: '140 × 110 × 32 cm',
-    materials: 'Honed Travertine & Nero Marble, Recessed 24K Gold Plinth Base',
+    dimensions: '160 × 95 × 34 cm',
+    materials: 'Sculpted Warm Oak Tabletop, Curved Obsidian Steel & Timber Base',
     leadTime: 'In Stock · White-Glove Delivery',
     description:
-      'A low architectural block of solid natural stone set above a recessed brushed gold light-channel base.',
+      'An organic pebble-shaped solid timber coffee table poised on an intersecting curved black steel and wood sculptural loop base.',
     architecturalStory:
-      'Anchors futuristic lounge environments with geological permanence and warm golden floor reflections.',
-    image: IMG_COFFEE,
-    secondaryImage: IMG_GOLD_SOFA,
+      'Anchors luxury lounge environments with fluid geometry and warm natural grain.',
+    image: UPLOADED_COFFEE_TABLE,
+    secondaryImage: UPLOADED_SOFA_SECTIONAL,
+    imagePosition: 'center 62%',
     modelType: 'plinth_coffee_table',
     finishes: [
       {
-        name: 'Honed Travertine & 24K Gold Base',
-        swatchHex: '#E2D6C1',
+        name: 'Natural Warm Oak & Obsidian Base',
+        swatchHex: '#B88652',
         woodHex: '#9C7A54',
         fabricHex: '#E2D6C1',
         accentHex: '#D6A342',
@@ -477,29 +491,30 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'arc-sculptural-lounge-chair',
-    name: 'Hyperion Orbital Gold & Velvet Lounge Chair',
+    name: 'Hyperion Ivory Bouclé Sofa & Lounge Suite',
     collectionId: 'sofas-living',
     collectionLabel: 'Luxury Sofas',
     roomId: 'living',
     price: 4800,
     originalPrice: 5600,
     showcaseTiers: ['new-arrival', 'special-offer'],
-    dimensions: '86 × 90 × 74 cm',
-    materials: 'Steam-Bent Smoked Walnut, Champagne Velvet, Brushed Gold Ring Base',
+    dimensions: '220 × 92 × 76 cm',
+    materials: 'Textured Ivory Bouclé, Tapered Warm Oak Legs, Sculptural Bolster Pillows',
     leadTime: 'In Stock · White-Glove Delivery',
     description:
-      'A low-slung orbital lounge chair cradled by a continuous brushed gold and walnut exoskeleton.',
+      'A serene ivory bouclé sofa and barrel armchair ensemble featuring organic curved silhouettes, woven tactile cushions, and warm timber legs.',
     architecturalStory:
-      'Rotates 360 degrees smoothly on a concealed precision bearing.',
-    image: IMG_GOLD_SOFA,
-    secondaryImage: IMG_OFFICE_CHAIR,
+      'Rotates 360 degrees smoothly on our interactive showroom stage.',
+    image: UPLOADED_SOFA_BOUCLE,
+    secondaryImage: UPLOADED_SOFA_SECTIONAL,
+    imagePosition: 'center 72%',
     modelType: 'sculptural_lounge_chair',
     finishes: [
       {
-        name: 'Champagne Velvet & Brushed Gold',
-        swatchHex: '#D6C1A3',
-        woodHex: '#4A3525',
-        fabricHex: '#D6C1A3',
+        name: 'Ivory Bouclé & Warm Oak',
+        swatchHex: '#F3EFE6',
+        woodHex: '#8C6944',
+        fabricHex: '#F3EFE6',
         accentHex: '#D6A342',
       },
     ],
@@ -508,26 +523,27 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'aurelia-dining-armchair-set',
-    name: 'Aurelia Gold-Tipped Espresso Dining Chairs (Pair)',
+    name: 'Aurelia Gold-Tipped Two-Tone Dining Chairs (Pair)',
     collectionId: 'dining-tables-chairs',
     collectionLabel: 'Dining Tables',
     roomId: 'dining',
     price: 3400,
     showcaseTiers: ['bestseller', 'new-arrival'],
     dimensions: '58 × 56 × 79 cm',
-    materials: 'Full-Grain Espresso Saddle Leather, Brushed 24K Gold Sabots & Trim',
+    materials: 'Two-Tone Velvet & Walnut Veneer Back, Brushed 24K Gold Leg Sabots',
     leadTime: 'In Stock · White-Glove Delivery',
     description:
-      'Sculpted wrap-around dining chairs featuring gold-piped seams and solid brushed brass leg sabots.',
+      'Sculpted wrap-around dining armchairs featuring contrasting cream and espresso upholstery with solid brushed brass leg sabots.',
     architecturalStory:
-      'Designed as the companion seating to the Eclipse Nero Marquina Dining Table.',
-    image: IMG_DINING_DARK,
-    secondaryImage: IMG_GOLD_SOFA,
+      'Designed as the companion seating to the Eclipse Sculptural Pedestal Dining Table.',
+    image: UPLOADED_DINING_SUITE,
+    secondaryImage: UPLOADED_ARCHITECTURAL_LOUNGE,
+    imagePosition: 'center 78%',
     modelType: 'curved_dining_chair',
     finishes: [
       {
-        name: 'Espresso Leather & 24K Gold Sabots',
-        swatchHex: '#2E231C',
+        name: 'Espresso & Cream with 24K Gold Sabots',
+        swatchHex: '#382B22',
         woodHex: '#241B15',
         fabricHex: '#382B22',
         accentHex: '#D6A342',
@@ -538,27 +554,28 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'cantilever-champagne-side-table',
-    name: 'Halo Cantilevered 24K Gold & Walnut Side Table',
+    name: 'Halo Cantilevered Side Table & Drum Coffee Table',
     collectionId: 'designer-furniture',
     collectionLabel: 'Designer Furniture',
     roomId: 'living',
     price: 2350,
     originalPrice: 2800,
     showcaseTiers: ['special-offer', 'bestseller'],
-    dimensions: 'Ø 48 × 54 cm',
-    materials: 'Hand-Brushed 24K Champagne Brass, Solid Smoked American Walnut Top',
+    dimensions: 'Ø 88 × 42 cm · Side Table 48 × 58 cm',
+    materials: 'Matte Obsidian Steel C-Frame, Solid Warm Walnut Drum & Tray Tops',
     leadTime: 'In Stock · Express Courier',
     description:
-      'An architectural C-profile side table with a curved brushed gold spine and open ring base.',
+      'An architectural C-profile side table paired with a double-tier circular walnut coffee table designed to slide effortlessly alongside deep sectional sofas.',
     architecturalStory:
-      'Slides effortlessly over sofa plinths to keep beverages and smart controls within reach.',
-    image: IMG_COFFEE,
-    secondaryImage: IMG_DECOR,
+      'Engineered for versatile living room arrangements with clean geometric lines.',
+    image: UPLOADED_SOFA_SECTIONAL,
+    secondaryImage: UPLOADED_COFFEE_TABLE,
+    imagePosition: '28% 76%',
     modelType: 'brass_side_table',
     finishes: [
       {
-        name: 'Brushed 24K Gold & Smoked Walnut',
-        swatchHex: '#D6A342',
+        name: 'Smoked Walnut & Obsidian Frame',
+        swatchHex: '#6E5036',
         woodHex: '#4A3423',
         fabricHex: '#EAE1D3',
         accentHex: '#FFC857',
@@ -569,26 +586,27 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'horizon-floating-nightstand-pair',
-    name: 'Horizon Gold-Inlaid Floating Nightstands (Pair)',
+    name: 'Horizon Gold-Trimmed 3-Drawer Nightstands (Pair)',
     collectionId: 'modern-bedroom',
     collectionLabel: 'King-Size Beds',
     roomId: 'bedroom',
     price: 3800,
     showcaseTiers: ['new-arrival'],
-    dimensions: '64 × 46 × 38 cm (Each)',
-    materials: 'Smoked American Walnut, Brushed Gold Drawer Channels, Suede Lining',
+    dimensions: '64 × 46 × 62 cm (Each)',
+    materials: 'Cream Lacquered Hardwood, Brushed 24K Gold Beveled Frame & Ring Pulls',
     leadTime: 'In Stock · White-Glove Delivery',
     description:
-      'Cantilevered bedside modules with recessed golden LED underglow and mitered waterfall joinery.',
+      'A matched pair of luxury three-drawer bedside chests framed in brushed gold with classical urn table lamps for warm ambient bedroom illumination.',
     architecturalStory:
-      'Suspends beside the Apex King Bed for a seamless zero-gravity horizon.',
-    image: IMG_KING_BED,
-    secondaryImage: IMG_DECOR,
+      'Flanks the Apex King Bed for a symmetrical hotel-suite sanctuary.',
+    image: UPLOADED_BED_KING,
+    secondaryImage: UPLOADED_SOFA_BOUCLE,
+    imagePosition: '88% 70%',
     modelType: 'floating_nightstand',
     finishes: [
       {
-        name: 'Smoked Walnut & Brushed Gold',
-        swatchHex: '#5C4028',
+        name: 'Cream Lacquer & 24K Brushed Gold',
+        swatchHex: '#E8DFC8',
         woodHex: '#5C4028',
         fabricHex: '#2B2623',
         accentHex: '#D6A342',
@@ -599,27 +617,28 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'verona-limestone-credenza',
-    name: 'Vanguard Fluted Bronze & Marble Credenza',
+    name: 'Vanguard Dark Salon Credenza & Tufted Ottoman Suite',
     collectionId: 'wardrobes-storage',
     collectionLabel: 'Modern Wardrobes',
     roomId: 'dressing',
     price: 8400,
     showcaseTiers: ['new-arrival'],
     dimensions: '220 × 50 × 76 cm',
-    materials: 'Fluted Dark Oak Doors, Nero Marquina Top Slab, Brushed Gold Base',
+    materials: 'Charcoal Paneling, Brushed Brass Hardware, Deep-Tufted Velvet & Leather',
     leadTime: 'Made to order · 3 Weeks',
     description:
-      'A low-profile architectural credenza combining rhythmic fluted timber doors with a polished black and gold marble gallery top.',
+      'A moody dark-luxury dressing salon ensemble combining brass-framed storage cabinetry with a deep button-tufted velvet ottoman and club armchair.',
     architecturalStory:
-      'Anchors executive suites and private cinema salons.',
-    image: IMG_WARDROBE,
-    secondaryImage: IMG_DINING_DARK,
+      'Anchors executive dressing rooms and private cinema salons.',
+    image: UPLOADED_WARDROBE_STORAGE,
+    secondaryImage: UPLOADED_DINING_SUITE,
+    imagePosition: 'center 78%',
     modelType: 'limestone_credenza',
     finishes: [
       {
-        name: 'Fluted Smoked Oak & Gold Base',
-        swatchHex: '#6E5036',
-        woodHex: '#5C4028',
+        name: 'Obsidian Slate & Brushed Brass',
+        swatchHex: '#33383B',
+        woodHex: '#241F1B',
         fabricHex: '#292522',
         accentHex: '#D6A342',
       },
@@ -629,26 +648,27 @@ export const PRODUCTS: FurnitureProduct[] = [
   },
   {
     id: 'solis-travertine-vessel-trio',
-    name: 'Aether Gold Halo Lamp & Sculptural Vessels',
+    name: 'Aether Tiered Pedestal Table & Sculptural Vessels',
     collectionId: 'designer-furniture',
     collectionLabel: 'Designer Furniture',
     roomId: 'living',
     price: 1950,
     originalPrice: 2400,
     showcaseTiers: ['new-arrival', 'special-offer'],
-    dimensions: 'Lamp H 58 cm · Vessels H 24–42 cm',
-    materials: 'Turned Travertine, Hammered 24K Gold Tray, Warm Diffused Shade',
+    dimensions: 'Table Ø 90 × 44 cm · Vessels H 24–42 cm',
+    materials: 'Brass-Column Tiered Table, Luminous Sphere Diffuser, Ceramic Vessels',
     leadTime: 'In Stock · Express Courier',
     description:
-      'An art-directed ensemble pairing a turned stone column lamp and warm golden diffuser with three sculptural vessels on a hammered gold tray.',
+      'An art-directed ensemble pairing a two-tier circular table on brushed gold columns with a glowing spherical centerpiece and sculptural ceramic vessels.',
     architecturalStory:
-      'Casts a warm cinematic golden halo across dark marble and walnut surfaces.',
-    image: IMG_DECOR,
-    secondaryImage: IMG_COFFEE,
+      'Casts a warm cinematic golden halo across luxury lounge interiors.',
+    image: UPLOADED_ARCHITECTURAL_LOUNGE,
+    secondaryImage: UPLOADED_COFFEE_TABLE,
+    imagePosition: 'center 68%',
     modelType: 'ceramic_vessels',
     finishes: [
       {
-        name: 'Travertine Stone & 24K Gold Tray',
+        name: 'Sage & 24K Gold Columns',
         swatchHex: '#D6A342',
         woodHex: '#8C6944',
         fabricHex: '#F5F0E6',

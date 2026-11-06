@@ -41,6 +41,7 @@ export const FloatingProductModal3D: React.FC<FloatingProductModal3DProps> = ({
   const [zoomPercent, setZoomPercent] = useState(100);
   const [quantity, setQuantity] = useState(1);
   const [addedFeedback, setAddedFeedback] = useState(false);
+  const [activeMediaTab, setActiveMediaTab] = useState<'3d' | 'photo1' | 'photo2'>('3d');
 
   const requestRenderRef = useRef<() => void>(() => {});
   const rotationRadRef = useRef((28 * Math.PI) / 180);
@@ -53,6 +54,7 @@ export const FloatingProductModal3D: React.FC<FloatingProductModal3DProps> = ({
     setRotationAngle(28);
     setZoomPercent(100);
     setQuantity(1);
+    setActiveMediaTab('3d');
     rotationRadRef.current = (28 * Math.PI) / 180;
     zoomFactorRef.current = 1.0;
   }, [product?.id]);
@@ -205,6 +207,7 @@ export const FloatingProductModal3D: React.FC<FloatingProductModal3DProps> = ({
   };
 
   const handleSpin360 = () => {
+    setActiveMediaTab('3d');
     let step = 0;
     const startAngle = rotationAngle;
     const totalSteps = 20;
@@ -239,14 +242,46 @@ export const FloatingProductModal3D: React.FC<FloatingProductModal3DProps> = ({
           <X className="w-5 h-5" />
         </button>
 
-        {/* Left Column: Interactive 360° & Zoom 3D Stage */}
+        {/* Left Column: Interactive 360° 3D Stage + Uploaded Showroom Photography Switcher */}
         <div className="lg:col-span-7 relative bg-[#080808] flex flex-col justify-between min-h-[380px] lg:min-h-[600px] border-b lg:border-b-0 lg:border-r border-[#D6A342]/30">
           {/* Top Stage Header */}
           <div className="relative z-20 p-5 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[#17120D]/90 border border-[#D6A342]/40 text-[11px] font-mono uppercase tracking-[0.2em] text-[#FFC857]">
-              <Sparkles className="w-3.5 h-3.5 text-[#FFC857]" />
-              INTERACTIVE 3D HOLOGRAPHIC STAGE
-            </span>
+            <div className="pointer-events-auto flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setActiveMediaTab('3d')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 border text-[11px] font-mono uppercase tracking-[0.16em] transition-colors cursor-pointer ${
+                  activeMediaTab === '3d'
+                    ? 'bg-[#D6A342] text-[#080808] border-[#FFC857] font-bold'
+                    : 'bg-[#17120D]/90 text-[#FFC857] border-[#D6A342]/40 hover:border-[#FFC857]'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                360° 3D Stage
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveMediaTab('photo1')}
+                className={`px-3 py-1.5 border text-[11px] font-mono uppercase tracking-[0.16em] transition-colors cursor-pointer ${
+                  activeMediaTab === 'photo1'
+                    ? 'bg-[#D6A342] text-[#080808] border-[#FFC857] font-bold'
+                    : 'bg-[#17120D]/90 text-[#D8CFC2] border-[#D6A342]/40 hover:border-[#FFC857]'
+                }`}
+              >
+                Showroom Photo 01
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveMediaTab('photo2')}
+                className={`px-3 py-1.5 border text-[11px] font-mono uppercase tracking-[0.16em] transition-colors cursor-pointer ${
+                  activeMediaTab === 'photo2'
+                    ? 'bg-[#D6A342] text-[#080808] border-[#FFC857] font-bold'
+                    : 'bg-[#17120D]/90 text-[#D8CFC2] border-[#D6A342]/40 hover:border-[#FFC857]'
+                }`}
+              >
+                Interior View 02
+              </button>
+            </div>
 
             <div className="pointer-events-auto flex items-center gap-2">
               <button
@@ -288,8 +323,23 @@ export const FloatingProductModal3D: React.FC<FloatingProductModal3DProps> = ({
             onPointerLeave={handlePointerUp}
             onWheel={handleWheelZoom}
             data-testid="modal-3d-stage"
-            className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing touch-none"
+            className={`absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing touch-none transition-opacity duration-300 ${
+              activeMediaTab === '3d' ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none z-0'
+            }`}
           />
+
+          {/* High-Resolution Uploaded Furniture Photo Overlay when Photo tab active */}
+          {activeMediaTab !== '3d' && (
+            <div className="absolute inset-0 z-10 overflow-hidden bg-[#080808] flex items-center justify-center p-6">
+              <img
+                src={activeMediaTab === 'photo1' ? product.image : product.secondaryImage}
+                alt={product.name}
+                style={{ objectPosition: product.imagePosition || 'center center' }}
+                className="w-full h-full object-cover border border-[#D6A342]/40 transition-transform duration-700 hover:scale-105"
+              />
+              <div className="pointer-events-none absolute inset-6 bg-gradient-to-t from-[#080808]/80 via-transparent to-transparent" />
+            </div>
+          )}
 
           {/* Bottom 360° Rotation & Zoom Controls */}
           <div className="relative z-20 p-5 bg-gradient-to-t from-[#080808] via-[#080808]/90 to-transparent grid grid-cols-1 sm:grid-cols-2 gap-4">

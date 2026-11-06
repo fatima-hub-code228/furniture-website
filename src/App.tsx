@@ -32,6 +32,10 @@ import {
   calculateCartSummary,
   updateCartItemQuantity,
   toggleWishlistItem,
+  UPLOADED_BED_KING,
+  UPLOADED_DINING_SUITE,
+  UPLOADED_SOFA_BOUCLE,
+  UPLOADED_WARDROBE_STORAGE,
 } from './data/catalog';
 import { DreamHomeHero3D } from './components/DreamHomeHero3D';
 import { CinematicTransformation3D } from './components/CinematicTransformation3D';
@@ -247,7 +251,7 @@ export default function App() {
           aria-labelledby="categories-heading"
           className="py-20 md:py-28 max-w-[1440px] mx-auto px-6 md:px-12 border-b border-[#D6A342]/20"
         >
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+          <div className="animate-cinematic-enter flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
             <div>
               <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-[#FFC857] mb-3">
                 <Sparkles className="w-3.5 h-3.5" />
@@ -280,13 +284,15 @@ export default function App() {
                       : 'border-[#D6A342]/30 hover:border-[#FFC857]'
                   }`}
                 >
-                  <div className="relative h-60 overflow-hidden bg-[#080808]">
+                  <div className="relative h-64 overflow-hidden bg-[#080808]">
                     <img
                       src={col.coverImage}
                       alt={col.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                      loading="eager"
+                      style={{ objectPosition: col.imagePosition || 'center center' }}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/25 to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/20 to-transparent" />
                     <span className="absolute top-4 left-4 px-2.5 py-1 bg-[#080808]/90 backdrop-blur-sm border border-[#D6A342]/45 text-[11px] font-mono uppercase tracking-widest text-[#FFC857]">
                       PEDESTAL 0{index + 1}
                     </span>
@@ -333,7 +339,7 @@ export default function App() {
           className="py-20 md:py-28 bg-[#080808]"
         >
           <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+            <div className="animate-cinematic-enter flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
               <div>
                 <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-[#FFC857] mb-3">
                   <Box className="w-3.5 h-3.5" />
@@ -357,7 +363,7 @@ export default function App() {
                     aria-label="Search furniture catalog"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search sofa, king bed, marble, chair..."
+                    placeholder="Search sofa, king bed, dining, wardrobe..."
                     className="w-full pl-10 pr-4 py-2.5 bg-[#17120D] border border-[#D6A342]/40 text-xs text-white placeholder-[#8E7F68] focus:outline-none focus:border-[#FFC857]"
                   />
                 </div>
@@ -504,9 +510,11 @@ export default function App() {
                           <img
                             src={product.image}
                             alt={product.name}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                            loading="eager"
+                            style={{ objectPosition: product.imagePosition || 'center center' }}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
 
                           <span className="absolute top-3 left-3 px-2.5 py-1 bg-[#080808]/90 backdrop-blur-sm border border-[#D6A342]/50 text-[10px] font-mono uppercase tracking-widest text-[#FFC857]">
                             {product.showcaseTiers.includes('special-offer')
@@ -645,11 +653,37 @@ export default function App() {
               <p className="text-sm md:text-base text-[#D8CFC2] leading-relaxed">
                 Founded for discerning collectors and architectural visionaries, DREAMHOME replaces
                 static furniture browsing with a live 3D holographic showroom. Every sofa,
-                monolithic Nero Marquina table, and cantilevered king bed is engineered from
+                sculptural pedestal dining table, and gold-inlaid king bed is engineered from
                 kiln-dried hardwood, honed natural stone, and 24K brushed gold hardware.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              {/* Curated Uploaded Showroom Interior Gallery */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                {[
+                  { src: UPLOADED_SOFA_BOUCLE, label: 'Living Sanctuary', pos: 'center 70%' },
+                  { src: UPLOADED_BED_KING, label: 'Royal Bedroom', pos: 'center 62%' },
+                  { src: UPLOADED_DINING_SUITE, label: 'Dining Salon', pos: 'center 72%' },
+                  { src: UPLOADED_WARDROBE_STORAGE, label: 'Atelier Vitrine', pos: 'center 52%' },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="group relative h-28 overflow-hidden border border-[#D6A342]/35 bg-[#17120D]"
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.label}
+                      style={{ objectPosition: item.pos }}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#080808]/90 via-transparent to-transparent" />
+                    <span className="absolute bottom-1.5 left-2 text-[10px] font-mono uppercase tracking-wider text-[#FFC857]">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-5 bg-[#17120D] border border-[#D6A342]/35">
                   <ShieldCheck className="w-5 h-5 text-[#FFC857] mb-2" />
                   <h3 className="text-base font-serif text-white mb-1">

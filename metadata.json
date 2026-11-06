@@ -1,0 +1,6 @@
+{
+  "name": "Architectural Residence & Interior Collection",
+  "description": "An interactive 3D architectural dream home and luxury furniture showcase with animated room transformations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
